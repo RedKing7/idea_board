@@ -3,6 +3,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
+
+const UsersController = require('./routes/UsersController');
+
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI); //mongodb://localhost/idea-board
 
@@ -16,15 +19,15 @@ connection.on('error', (err) => {
   console.log('Mongoose default connection error: ' + err);
 });
 
-
+//middleware
 app.use(bodyParser.json());
-
-
 app.use(express.static(__dirname + '/client/build/'));
-app.get('/', (req,res) => {
-  res.sendFile(__dirname + '/client/build/index.html');
-})
 
+app.use('/api/users', UsersController);
+
+app.get('/', (req,res) => {
+   res.sendFile(__dirname + '/client/build/index.html');
+})
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

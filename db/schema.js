@@ -2,17 +2,6 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema ({
-   name: {
-      type: String,
-      required: true
-   },
-   password: {
-      type: String,
-      required: true
-   },
-})
-
 const IdeaSchema = new Schema ({
    title: {
       type: String,
@@ -27,10 +16,20 @@ const IdeaSchema = new Schema ({
    },
 })
 
+const UserSchema = new Schema ({
+   name: {
+      type: String,
+   },
+   password: {
+      type: String,
+   },
+   ideas: [IdeaSchema]
+})
+
 const UserModel = mongoose.model('User', UserSchema);
 const IdeaModel = mongoose.model('Idea', IdeaSchema);
 
 module.exports = {
-   UserModel,
-   IdeaModel
+   User: UserModel,
+   Idea: IdeaModel
 }
