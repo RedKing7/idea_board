@@ -17,7 +17,7 @@ const IdeaSchema = new Schema ({
 })
 
 const UserSchema = new Schema ({
-   name: {
+   username: {
       type: String,
    },
    password: {
