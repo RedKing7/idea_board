@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
+import SignUpForm from './SignUpForm'
 
 class LogInPage extends Component {
    state = {
@@ -8,12 +9,10 @@ class LogInPage extends Component {
    }
 
    getAllUsers = async () =>{
-      console.log('Hello!')
       let response = await axios.get('/api/users');
       try{
          this.setState({users: response.data})
       }catch(err){console.log(err)}
-      console.log(response.data);
    }
 
    componentWillMount(){
@@ -27,9 +26,14 @@ class LogInPage extends Component {
             <h3>Select an Existing User</h3>
             {
                this.state.users.map(user=>{
-                  return (<Link key={user._id} to={`/user/${user._id}/`}>{user.username}</Link>)
+                  return (
+                     <div key={user._id}>
+                        <Link key={user._id} to={`/user/${user._id}/`}>{user.username}</Link>
+                     </div>
+                  )
                })
             }
+            <SignUpForm/>
          </div>
       );
    }
